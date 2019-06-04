@@ -1,0 +1,278 @@
+---
+title: "R for Insurance"
+author: "Ricardo Lastra"
+date: "Junio del 2019"
+#output: html_notebook
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Agenda {.tabset .tabset-fade .tabset-pills}
+
++ Welcome!
++ Getting Started with R Programming
++ R_Basico_1.0
+
+&nbsp;
+
+### Welcome!
+
+`OBJETIVO:` **Presentación y breve panorama de lo que haremos las próximas semanas**
+
+&nbsp;
+
+Recomendación como en todo, dejen a un lado los paradigmas, cosas que han escuchado, leido en diversos medios, y preparense para tener una mente dispuesta. 
+
+&nbsp;
+
+```{r echo=F, fig.cap="Clear your minds!!!", out.width = '50%'}
+knitr::include_graphics("Imagenes/brain.jpg")
+```
+
+&nbsp;
+
+Hay que ubicarnos en donde estamos en base a lo que hacemos actualmente. No todo lo que hacemos hoy esta mal, pero hay aún mas cosas que aprender. 
+
+&nbsp;
+
+```{r echo=F, fig.cap="Dónde estamos?", out.width = '60%'}
+knitr::include_graphics("Imagenes/Analytics.jpg")
+```
+
+&nbsp;
+
+La generación e ingesta de datos hoy es una necesidad, debemos contar con mejores herramientas para el manejo de los mismos. Es muy util en nuestras vidas se consumidores, pero mucho mejor ser generadores y controladores de ellos. 
+
+&nbsp;
+
+```{r echo=F, fig.cap="Datos everywhere!", out.width = '60%'}
+knitr::include_graphics("Imagenes/dataUse.jpeg")
+```
+
+&nbsp;
+
+Debemos de empezar por algo, los diferentes lenguajes de programación y otras herramientas denominadas Open Source son un excelente comienzo!!
+
+&nbsp;
+
+```{r echo=F, fig.cap="Python y R para empezar", out.width = '60%'}
+knitr::include_graphics("Imagenes/poll1.jpeg")
+```
+
+&nbsp;
+
+Necesitamos ver el ecosistema, nuestra realidad y tomar la mejor decisión para ver por donde empezamos, todos los lenguajes son utiles, pero no podemos saberlo todo.
+
+&nbsp;
+
+```{r echo=F, fig.cap="Ecosistema de R", out.width = '60%'}
+knitr::include_graphics("Imagenes/RWorld.jpeg")
+```
+
+&nbsp;
+
+Python y R ya como un mismo lenguaje, es por ello que empezamos con un leguaje poderoso, que ha ganadado el respeto de Python.
+
+&nbsp;
+
+```{r echo=F, fig.cap="R y Python una maravilla!", out.width = '60%'}
+knitr::include_graphics("Imagenes/python&R.jpeg")
+```
+
+&nbsp;
+
+Dudas del Open Source, revisen el siguiente Link https://www.gnu.org/licenses/quick-guide-gplv3.html y naveguen.
+
+
+&nbsp;
+
+### Getting Started with R Programming
+
+`OBJETIVO:` **Breve historia de R y contexto**
+
+&nbsp;
+
+#### Historia de R
+
+&nbsp;
+
+Ross Ihaka and Robert Gentleman desarrollaron `R` como un software *free* cuando impartían clases en la Universidad de Auckland en New Zealand a principios de 1990. 
+
+Lo crearon a partir del lenguaje estadístico denominado `S` y para diferenciar su trabajo usaron una sintaxis similar para su propio uso. En 1993 anunciaron su colaboración en las noticias del mailing list de `S`, muchas personas se interesaron y se sumaron a la colaboración. Dicha colaboración sigue en pie en el sitio https://www.r-project.org/ 
+
+El lanzamiento oficial (1.0.0) fue en Febrero del 2000, para ese entonces ya era parte de la fundación de software libre GNU. Actualmente la última versión (3.6) está disponible desde Abril de este año para más de 30 países.
+
+&nbsp;
+
+#### Ventajas y usos de R
+
+&nbsp;
+
+Es un software que ayuda a la manipulación de datos, cálculos aritméticos y visualización de gráficos dinámicos. 
+
+El código es de fácil escritura y comprensión.
+
+Excelente para el cálculo de matrices, vectores, algoritmos complejos.
+
+Existe una colección muy amplia de herramientas para el análisis de datos, visualización y otros propósitos. `dplyr`, `data.table`,  `tidyr` y `ggplot2` algunos de ellos.
+
+Fácil desarrollo de herramientas con buen nivel de interacción como `blogdown` y `xaringan`.
+
+&nbsp;
+
+#### Iniciando
+
+&nbsp;
+
+Para descargar e instalar `R` en su última versión, deberán utilizar el siguiente link https://cran.r-project.org/bin/windows/base/  donde encontraran la versión para Windows que es el sistema operativo que todos tenemos.
+
+Un lenguaje amigable, fácil de usar y entender, simple y efectivo.
+
+Con `R` se distribuyen algunos paquetes, pero existen muchos más en el sitio CRAN, cubriendo así un amplio espectro de herramientas estadísticas, de cálculo y de visualización que les harán más divertida la vida.
+
+En los próximos días les hare llegar documentos como estos, los cuales les serán de gran apoyo con cosas básicas, no podemos retener todo en mente, además que no cubriremos muchos comandos, ejemplos y funciones de las paqueterías.
+
+
+&nbsp;
+
+```{r echo=F, out.width = '50%'}
+knitr::include_graphics("Imagenes/cheatsheet.jpeg")
+```
+
+&nbsp;
+
+Para las siguientes sesiones usaremos una interface muy "Fancy" denominada RStudio, la cual podrán descargar en el siguiente link https://www.rstudio.com/products/rstudio/download/ que los llevara a tener la versión más reciente 1.2.1335
+
+Existen más programas o UI´s muy padres, Anaconda (luego revisan el siguiente link) https://www.anaconda.com/distribution/ tiene excelentes herramientas con Python y aun para R. Sin embargo una de las mejores herramientas con R es RStudio. 
+
+No nos perdemos de mucho, échenle un ojo.
+
+&nbsp;
+
+```{r echo=F, out.width = '60%'}
+knitr::include_graphics("Imagenes/heatmap.jpg")
+```
+
+&nbsp;
+
+##### *Están listos?*
+
+&nbsp;
+
+### R_Basico_1.0
+
+`OBJETIVO:` **Vistazo de Rstudio y primeros comandos**
+
+&nbsp;
+
+Hecharemos un vistazo a la parte basica de RStudio que nos permitira entender el funcionamiento del lenguaje, sus alcances, sus aplicaciones y sus ventajas sobre las herramientas actuales que conocemos.
+
+&nbsp;
+
+**FORMAS DE DECLARAR Ó GUARDAR Ó ALMACENAR Ó MANTENER VARIABLES:**
+```{r }
+x = 3
+y <- 4
+5 -> z
+```
+
+**Asi estan almacenadas en el ambiente:**
+
+```{r }
+x
+y
+z
+```
+
+
+**SOBRESCRIBIR VARIABLES:**
+```{r }
+x = 4
+y <- 5
+6 -> z
+```
+
+**Asi estan almacenadas en el ambiente:**
+
+```{r }
+x
+y
+z
+```
+
+**CALCULOS BASICOS:**
+
+Operadores
+```{r ,warning=F, error=F, message=F}
+#SUMAS
+25+25
+x+y
+#MULTIPLICACIONES
+35*2
+#DIVISIONES
+x/y
+#RESTAS
+z-x-y
+#Potencias
+3^2
+y^x
+```
+
+**CALCULOS BASICOS**
+
+FORMAS DE **NO** HACER CALCULOS BASICOS, ASI NO ES LA SINTAXIS DE R:
+```{r ,warning=F, error=F, message=F}
+#SUMAS
+#=25+25
+
+#MULTIPLICACIONES
+#(35)(2)
+```
+
+**VECTORES**
+
+```{r }
+#Basicos
+x = c(1,4,3,1,3,2,2,2)
+x[1]
+x[2]
+x[2:4]
+x[-1]
+x[-4]
+x[x<=3]
+which(x==1)
+x==1
+#Mas complejos con operaciones, guardamos vectores
+Cebollas.huacal <- c(12,4,4,6,9,3)
+Chiles.caja <- c(5,3,2,2,12,9)
+#Multiplicamos vectores
+Cebollas.precio <- Cebollas.huacal *200
+Chiles.precio <- Chiles.caja *100
+#Sumamos vectores
+Cebollas.precio + Chiles.precio
+#Tambien lo podemos hacer asi en 1 sola linea
+Cebollas.huacal *200 + Chiles.caja *100
+```
+
+**OBJETOS**
+
+```{r }
+objeto <- 3*3
+```
+
+**FUNCIONES**
+```{r }
+myfun = function(x, y){
+  return (x*y)
+}
+myfun(3,4)
+
+myfun2 = function(x, n=2){
+  return(x^n)
+}
+myfun2(4)
+myfun2(2, n=3)
+```
