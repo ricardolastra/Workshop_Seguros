@@ -2,7 +2,6 @@
 title: "R for Insurance"
 author: "Ricardo Lastra"
 date: "Junio del 2019"
-#output: html_notebook
 output: html_document
 ---
 
