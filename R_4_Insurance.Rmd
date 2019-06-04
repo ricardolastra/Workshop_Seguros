@@ -133,6 +133,8 @@ Un lenguaje amigable, fácil de usar y entender, simple y efectivo.
 
 Con `R` se distribuyen algunos paquetes, pero existen muchos más en el sitio CRAN, cubriendo así un amplio espectro de herramientas estadísticas, de cálculo y de visualización que les harán más divertida la vida.
 
+El link con todo el material del curso esta en mi repo personal de Git, tengan cuidado de no aruinarlo, luego hacemos otro curso de Git. https://github.com/ricardolastra/Workshop_Seguros
+
 En los próximos días les hare llegar documentos como estos, los cuales les serán de gran apoyo con cosas básicas, no podemos retener todo en mente, además que no cubriremos muchos comandos, ejemplos y funciones de las paqueterías.
 
 
