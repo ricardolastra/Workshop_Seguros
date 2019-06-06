@@ -11,6 +11,8 @@ Excelente curso de R para principiantes con experiencia en seguros
 
 ## DB
 
+
+
 *Science is to understand your way...* 
 *Agradecimiento a harvard.edu, Cran, ITAM, Github y la comunidad Open Source* 
 

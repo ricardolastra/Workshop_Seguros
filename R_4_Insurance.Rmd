@@ -319,7 +319,12 @@ myfun2(2, n=3)
 
 ### R_Basico_1.1
 
-#### Cargando nuestros datos
+`OBJETIVO:` **Como cargar datos, paquetes y librerias**
+
+&nbsp;
+
+
+Cargando nuestros datos
 
 R tiene algunas formas de leer archivos, los mas comunes son tablas, archivos planos, archivos con alguna codificacion especifica o estructurada. Aunque no sera el objetivo del curso, leer cadenas de texto, datos sin estructuras definidas o espcificas y archivos sin algun tipo de orden, es algo que tambien se puede hacer en R. 
 
@@ -341,39 +346,29 @@ Nota. Mas información ver documento de apoyo `data-import`
 
 &nbsp;
 
-#### Paqueterias de R o los famosos *packages*
+Paqueterias de R ó los famosos *packages*
 
+Los paquetes de R pueden ser instalados desde el famoso CRAN, el cual es una red de archivos de alta gama. Para ello deberán  usar la función `install.packages`. Cuando instalan un paquete ponen una copia en la computadora de forma local, pero aun no lo hace "usable", solo esta "disponible". Para usarlo deberan adjuntar o cargar la funcion de `library`.
 
-R packages can be installed from the Comprehensive R Archive Network (CRAN)
-using the `install.packages` function. Installing a package puts a copy of the
-package on your local computer, but does not make it available for use. To use
-an installed package you must attach it using the `library` function.
-
-For this workshop we will use a suite of packages called "the tidyverse". The
-tidyverse provides improved replacements for much of the basic data manipulation
-functionality in R. We can install and attach this package as follows:
+Gracias a nuestro amigo Hadley y otros colaboradores, en este curso usaremos para prueba de carga el famoso "the tidyverse". `Tidyverse` nos brinda grandes herramientas para manipulación basica y avanzada de datos, es muy funcional, facíl e intuitiva. 
 
 ```{r, eval=FALSE}
 install.packages("tidyverse")
 ```
 ```{r}
-library("tidyverse")
+library(tidyverse)
 ```
 
-Asking R for help
----------------------
+Ayuda en  R.
 
-You can ask R for help using the `help` function, or the `?` shortcut.
+Podemos usar la función `help` o el operador al inicio de cada sentencia `?`.
 
 ```{r}
 help(help)
 ```
 
-The `help` function can be used to look up the documentation for a function, or
-to look up the documentation to a package. We can learn how to use the `stats`
-package by reading its documentation like this:
 
-```{r, eval=FALSE}
-help(package = "stats")
+```{r}
+?str
 ```
 
