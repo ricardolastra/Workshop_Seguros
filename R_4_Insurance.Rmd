@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 + Welcome!
 + Getting Started with R Programming
 + R_Basico_1.0
++ R_Basico_1.1
 
 &nbsp;
 
@@ -80,6 +81,10 @@ Python y R ya como un mismo lenguaje, es por ello que empezamos con un leguaje p
 ```{r echo=F, fig.cap="R y Python una maravilla!", out.width = '60%'}
 knitr::include_graphics("Imagenes/python&R.jpeg")
 ```
+
+&nbsp;
+
+R es un lenguaje muy usado para la enseñanza, cada vez mas universidades lo usan como herramienta para estadística y otras áreas, chequen este articulo.  http://r4stats.com/articles/popularity/
 
 &nbsp;
 
@@ -161,7 +166,6 @@ knitr::include_graphics("Imagenes/heatmap.jpg")
 
 ##### *Están listos?*
 
-&nbsp;
 
 ### R_Basico_1.0
 
@@ -169,8 +173,40 @@ knitr::include_graphics("Imagenes/heatmap.jpg")
 
 &nbsp;
 
+Recordando...
+
+*R es un lenguaje computacional diseñado para la estadística.* 
+
+* Es gratis
+* Amplias librerias
+* Basto soporte, mailing list, blogs, tutoriales
+* De facíl desarrollo
+* Desarrolado por estadísticos
+
+&nbsp;
+
+Recuerden que cualquier cosa que escriban en R muy probablemente no seran los primeros en intentarlo, hay una gran posibilidad que alguien ya haya escrito  algun paquete justo para lo que necesitan.
+
 Hecharemos un vistazo a la parte basica de RStudio que nos permitira entender el funcionamiento del lenguaje, sus alcances, sus aplicaciones y sus ventajas sobre las herramientas actuales que conocemos.
 
+&nbsp;
+
+```{r echo=F, out.width = '70%'}
+knitr::include_graphics("Imagenes/rstudio.jpg")
+```
+
+&nbsp;
+
+Inicien RStudio y abran un R script:
+
+* En Windows click en el boton de Inicio y busquen Rstudio.
+* Ya en Rstudio den click en  `File -> New File -> R script` 
+* Guardenlo en su carpeta del curso  `File -> Save As -> ruta a su carpeta y nombre del file`
+
+Ahora traten de reproducir las siguientes notas.
+
+Nota. Recuerden el simbolo `#` para comentar su codigo. 
+  
 &nbsp;
 
 **FORMAS DE DECLARAR Ó GUARDAR Ó ALMACENAR Ó MANTENER VARIABLES:**
@@ -188,6 +224,9 @@ y
 z
 ```
 
+Nota. Los valores que guardamos pueden ser usados en subsecuentes operaciones, recuerden que lo mas limpio es poner el nombre a la izquierda y los valores a la derecha.
+
+&nbsp;
 
 **SOBRESCRIBIR VARIABLES:**
 ```{r }
@@ -277,3 +316,64 @@ myfun2 = function(x, n=2){
 myfun2(4)
 myfun2(2, n=3)
 ```
+
+### R_Basico_1.1
+
+#### Cargando nuestros datos
+
+R tiene algunas formas de leer archivos, los mas comunes son tablas, archivos planos, archivos con alguna codificacion especifica o estructurada. Aunque no sera el objetivo del curso, leer cadenas de texto, datos sin estructuras definidas o espcificas y archivos sin algun tipo de orden, es algo que tambien se puede hacer en R. 
+
+Para leer datos de un archivo, primero deben saber que tipo de archivo es, es decir, su extension. La tabla de abajo muestra una lista de funciones que pueden ser importadas segun el formato del archivo.
+
+  tipo de datos                 funcion         paquete 
+  ------------------------- ---------------  --------
+  comma separated (.csv)    `read_csv()`     readr
+  other delimited formats   `read_delim()`   readr
+  R (.Rds)                  `read_rds()`     readr
+  Stata (.dta)              `read_dta()`     haven   
+  SPSS (.sav)               `read_spss()`    haven   
+  SAS (.sas7bdat)           `read_sas()`     haven   
+  Excel (.xls, .xlsx)       `read_excel()`   readxl  
+  regular delimited files   `fread()`        data.table 
+
+
+Nota. Mas información ver documento de apoyo `data-import`
+
+&nbsp;
+
+#### Paqueterias de R o los famosos *packages*
+
+
+R packages can be installed from the Comprehensive R Archive Network (CRAN)
+using the `install.packages` function. Installing a package puts a copy of the
+package on your local computer, but does not make it available for use. To use
+an installed package you must attach it using the `library` function.
+
+For this workshop we will use a suite of packages called "the tidyverse". The
+tidyverse provides improved replacements for much of the basic data manipulation
+functionality in R. We can install and attach this package as follows:
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+```
+```{r}
+library("tidyverse")
+```
+
+Asking R for help
+---------------------
+
+You can ask R for help using the `help` function, or the `?` shortcut.
+
+```{r}
+help(help)
+```
+
+The `help` function can be used to look up the documentation for a function, or
+to look up the documentation to a package. We can learn how to use the `stats`
+package by reading its documentation like this:
+
+```{r, eval=FALSE}
+help(package = "stats")
+```
+
