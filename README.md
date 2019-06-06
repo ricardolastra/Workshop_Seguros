@@ -7,13 +7,15 @@ Excelente curso de R para principiantes con experiencia en seguros
 ## Material de apoyo
 *Los documentos de apoyo que pueden imprimir son [estos.](Documentos_Apoyo/)
 
-## Ejercicios
-
 ## DB
+*Los archivos con informació que ocuparemos estan [aquí.](bases/)
 
-
+## Ejercicios
+*En la sesión 4 haremos ya algunos ejercicios*
 
 *Science is to understand your way...* 
-*Agradecimiento a harvard.edu, Cran, ITAM, Github y la comunidad Open Source* 
+
+*Agradecimiento a harvard.edu, CRAN, ITAM, Github y la comunidad Open Source* 
+
 
 __Por Ricardo Lastra__
