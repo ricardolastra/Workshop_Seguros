@@ -13,9 +13,9 @@ Excelente curso de R para principiantes con experiencia en seguros
 ## Ejercicios
 *En la sesión 4 haremos ya algunos ejercicios*
 
-*Science is to understand your way...* 
+> Science is to understand your way...
 
-*Agradecimiento a harvard.edu, CRAN, ITAM, Github y la comunidad Open Source* 
+> Agradecimiento a harvard.edu, CRAN, ITAM, Github y la comunidad Open Source
 
 
 __Por Ricardo Lastra__
