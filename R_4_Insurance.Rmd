@@ -283,7 +283,11 @@ x[2:4]
 x[-1]
 x[-4]
 x[x<=3]
+#Función which (más adelante veremos, for, while, ifelse)
+#Devuelve la posición del elemento que pidamos validar.
 which(x==1)
+#Quizá con el alfabeto es más claro.
+which(letters == "g")
 x==1
 #Mas complejos con operaciones, guardamos vectores
 Cebollas.huacal <- c(12,4,4,6,9,3)
@@ -316,6 +320,30 @@ myfun2 = function(x, n=2){
 myfun2(4)
 myfun2(2, n=3)
 ```
+
+**R LOOP´S**
+
+Sintaxis *WHILE*:
+
+> while (test_expression){
+statement
+}
+
+```{r }
+#FOR LOOP
+
+#WHILE
+
+#IFELSE
+
+#WHICH
+
+```
+&nbsp;
+
+Nota. Para más detalles consulten los documentos de apoyo del repo de git en el documento `refcard_2.0_operators_others`
+
+&nbsp;
 
 ### R_Basico_1.1
 
@@ -364,11 +392,7 @@ Ayuda en  R.
 Podemos usar la función `help` o el operador al inicio de cada sentencia `?`.
 
 ```{r}
-help(help)
-```
-
-
-```{r}
-?str
+#help(help)
+#?str
 ```
 
