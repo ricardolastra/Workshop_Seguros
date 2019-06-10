@@ -1,9 +1,15 @@
 ---
 title: "R for Insurance"
-author: "Ricardo Lastra"
 date: "Junio del 2019"
-output: html_document
+output: 
+  html_document:
+    includes:
+      after_body: footer.html
 ---
+
+html_document:
+    includes:
+      after_body: footer.html
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -325,14 +331,31 @@ myfun2(2, n=3)
 
 Sintaxis *WHILE*:
 
-> while (test_expression){
-statement
-}
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+while (test_expression){
+  statement
+  }
+
+</div>
+
+&nbsp;
+
+```{r }
+#definimos "i"
+i <- 1
+#ejecutamos while loop
+while (i < 6) {
+  print(i)
+  i = i+1
+  }
+```
 
 ```{r }
 #FOR LOOP
-
-#WHILE
 
 #IFELSE
 
@@ -395,4 +418,5 @@ Podemos usar la función `help` o el operador al inicio de cada sentencia `?`.
 #help(help)
 #?str
 ```
+
 
