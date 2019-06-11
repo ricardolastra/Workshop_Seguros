@@ -21,6 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 + Getting Started with R Programming
 + R_Basico_1.0
 + R_Basico_1.1
++ R_Basico_1.2
 
 &nbsp;
 
@@ -282,7 +283,7 @@ FORMAS DE **NO** HACER CALCULOS BASICOS, ASI NO ES LA SINTAXIS DE R:
 
 ```{r }
 #Basicos
-x = c(1,4,3,1,3,2,2,2)
+x <- c(1,4,3,1,3,2,2,2)
 x[1]
 x[2]
 x[2:4]
@@ -345,21 +346,104 @@ while (test_expression){
 &nbsp;
 
 ```{r }
-#definimos "i"
 i <- 1
-#ejecutamos while loop
 while (i < 6) {
   print(i)
   i = i+1
   }
 ```
+&nbsp;
+
+Sintaxis *FOR*:
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+for(var in seq){
+  expr
+  }
+
+</div>
+
+&nbsp;
+
 
 ```{r }
-#FOR LOOP
+for (año in c(2014,2015,2016,2017,2018,2019)){
+  print(paste("El año actual es", año))
+}
+```
+&nbsp;
 
-#IFELSE
+Aún mejor...
 
-#WHICH
+```{r }
+for (año in 2014:2019){
+  print(paste("El año actual es", año))
+}
+```
+&nbsp;
+
+lo ideal...
+
+```{r }
+años <- c(2014,2015,2016,2017,2018,2019)
+for (i in años){
+  print(paste("El año actual es", i))
+}
+```
+&nbsp;
+
+**R FUNCTION´S**
+
+
+Sintaxis *IFELSE*:
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+ifelse(test, yes, no)
+
+</div>
+
+&nbsp;
+
+
+```{r }
+plazo <- c(6,9,12,24,30)
+ifelse(plazo==9, "aplica" , "no aplica")
+```
+&nbsp;
+
+más divertido...
+
+```{r }
+plazo <- c(6,9,12,24,30)
+ifelse(plazo>=9 & plazo<=24, "aplica" , "no aplica")
+```
+&nbsp;
+
+Sintaxis *WHICH*:
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+which(x, arr.ind = FALSE, useNames = TRUE)
+
+</div>
+
+&nbsp;
+
+
+```{r }
+
+which(letters == "g")
 
 ```
 &nbsp;
@@ -403,6 +487,8 @@ Los paquetes de R pueden ser instalados desde el famoso CRAN, el cual es una red
 
 Gracias a nuestro amigo Hadley y otros colaboradores, en este curso usaremos para prueba de carga el famoso "the tidyverse". `Tidyverse` nos brinda grandes herramientas para manipulación basica y avanzada de datos, es muy funcional, facíl e intuitiva. 
 
+&nbsp;
+
 ```{r, eval=FALSE}
 install.packages("tidyverse")
 ```
@@ -410,7 +496,9 @@ install.packages("tidyverse")
 library(tidyverse)
 ```
 
-Ayuda en  R.
+&nbsp;
+
+Nota. Ayuda en  R
 
 Podemos usar la función `help` o el operador al inicio de cada sentencia `?`.
 
@@ -419,4 +507,110 @@ Podemos usar la función `help` o el operador al inicio de cada sentencia `?`.
 #?str
 ```
 
+&nbsp;
 
+Cargando nuestro primer archivo:
+
+```{r}
+read_csv("bases/PRIMAS_EJE_CARGA.csv")
+```
+
+UPS!! Problemas!!!
+
+&nbsp;
+
+Hagamos que este disponible la libreria...
+
+```{r}
+library(readr)
+read_csv("bases/PRIMAS_EJE_CARGA.csv")
+```
+
+Clasico de SIISA y nuestros amigos de TI!!!
+
+&nbsp;
+
+```{r}
+library(readr)
+read_csv("bases/PRIMAS_EJE_CARGA.csv", skip = 2)
+```
+
+&nbsp;
+
+```{r}
+primas <- read_csv("bases/PRIMAS_EJE_CARGA.csv", skip = 2, n_max = 5)
+```
+
+&nbsp;
+
+```{r}
+library(data.table)
+primas_fread <- fread("bases/PRIMAS_EJE_CARGA.csv", skip = 2, sep = ",")
+head(primas_fread,5)
+```
+
+&nbsp;
+
+Ahora validamos los datos que cargamos en el Ambiente
+
+```{r}
+class(primas_fread)
+```
+
+&nbsp;
+
+Podemos obtener aún más
+
+```{r}
+library(dplyr)
+glimpse(primas_fread)
+```
+
+&nbsp;
+
+Un poco más
+
+```{r}
+str(primas_fread)
+```
+
+&nbsp;
+
+la mejor información!!!
+
+```{r}
+summary(primas_fread)
+```
+
+### R_Basico_1.2
+
+`OBJETIVO:` **Manipulación de datos**
+
+&nbsp;
+
+Normalmente los datos en R son almacenados como `data.frame`
+
+Un data.frame es una lista de vectores de la misma longitud, piensenlos como una tabla de observaciones (individuos), cada entrada del vector en la lista forma una columna, cada columna puede ser de diferente tipo, conocemos a las columnas como variables y a las filas como observaciones.
+
+Un data.frame tiene entonces dos dimensiones correspondientes al numero de filas y columnas, en ese estricto orden. 
+
+Empezaremos a hacer nuestros primeros subsets, muy utiles en la vida real.
+
+&nbsp;
+
+Empezamos con un clasico, `filter`
+
+```{r}
+filter(primas_fread, PLAZO == 34 & SEXO == "F")
+```
+
+
+
+```{r}
+filter(primas_fread, PLAZO == 3, NOMBRE %in% c("AARON", "RICARDO"))
+```
+Buen acceso a ciertas observaciones, `slice`
+
+```{r}
+slice(primas_fread, 1:5)
+```
