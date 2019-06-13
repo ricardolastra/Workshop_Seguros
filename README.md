@@ -8,10 +8,13 @@ Excelente curso de R para principiantes con experiencia en seguros
 *Los documentos de apoyo que pueden imprimir son [estos.](Documentos_Apoyo/)
 
 ## DB
-*Los archivos con información que ocuparemos estan [aquí.](bases/)
+*Los archivos con información que ocuparemos están [aquí.](bases/)
 
 ## Ejercicios
-*En la sesión 4 haremos ya algunos ejercicios*
+*Los ejercicios para el fin de semana son [estos.](ejercicios/)
+
+## Peticiones especiales
+*Manejo de strings, veremos algunos algoritmos de texto muy útiles.
 
 > Science is to understand your way...
 
