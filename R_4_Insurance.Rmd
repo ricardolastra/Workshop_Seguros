@@ -548,6 +548,7 @@ primas <- read_csv("bases/PRIMAS_EJE_CARGA.csv", skip = 2, n_max = 5)
 &nbsp;
 
 ```{r}
+#install.packages("data.table")
 library(data.table)
 primas_fread <- fread("bases/PRIMAS_EJE_CARGA.csv", skip = 2, sep = ",")
 head(primas_fread,5)
