@@ -699,6 +699,8 @@ str(test)
 
 ### R_dplyr
 
+`OBJETIVO:` **Pipes, datos en forma tidy y vervos de la librería**
+
 &nbsp;
 
 ### R_ggplot
