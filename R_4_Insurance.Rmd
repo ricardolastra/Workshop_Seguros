@@ -669,7 +669,7 @@ Usen el archivo que esta en la carpeta de las [bases](https://github.com/ricardo
 
   a) Lean la base del ejericio con alguna función de la libreria `readr`,  y limiten la lectura a 20 rows.
 
-```{r, include = F}
+```{r}
 library(readr)
 read_csv("C:/Users/Administrador/Desktop/DOC/WORKSHOP_R/Workshop_Seguros/bases/PRIMAS_EJE_AUTOS.csv", n_max = 20)
 ```
@@ -679,7 +679,7 @@ read_csv("C:/Users/Administrador/Desktop/DOC/WORKSHOP_R/Workshop_Seguros/bases/P
   b) Lean TODA la base del ejericio y asignen la información a una variable, traten de quitar el encabezado feo de los reportes de SIISA. 
 
 
-```{r, include = F}
+```{r}
 library(readr)
 test <- read_csv("C:/Users/Administrador/Desktop/DOC/WORKSHOP_R/Workshop_Seguros/bases/PRIMAS_EJE_AUTOS.csv", skip = 3)
 ```
@@ -687,11 +687,11 @@ test <- read_csv("C:/Users/Administrador/Desktop/DOC/WORKSHOP_R/Workshop_Seguros
 
   c) Ahora, con su variable, usen por lo menos dos de las funciones para exploración de datos.
 
-```{r, include = F}
+```{r}
 summary(test)
 ```
 
-```{r, include = F}
+```{r}
 str(test)
 ```
 
@@ -703,13 +703,175 @@ str(test)
 
 &nbsp;
 
+Sigan cuidadosamente las siguientes instrucciones, inicien RStudio y generen un nuevo proyecto:
+
+* En Windows click en el botón de Inicio y busquen Rstudio.
+* Ya en Rstudio den click en  `File -> New Project... -> Existing Directory -> Browse... -> seleccionar carpeta destino -> Open -> Create Project` 
+* Ya que se abre otra pantalla de R click en  `File -> New File -> R script` 
+* Guárdenlo  en su carpeta del Proyecto nuevo que acabamos de crear.  `File -> Save As -> ruta a su carpeta y nombre del file`
+* Iniciemos con lo siguiente:
+
+&nbsp;
+
+```{r}
+library(dplyr)
+library(readr)
+emision <- read.csv(list.files(pattern='EMISION'), header = T, skip = 2, stringsAsFactors=F)
+```
+Revisamos los datos:
+
+```{r}
+str(emision)
+```
+&nbsp;
+
+**Verbos de `dplyr` que usaremos:**
+
+* mutate() adds new variables that are functions of existing variables
+* select() picks variables based on their names.
+* filter() picks cases based on their values.
+* summarise() reduces multiple values down to a single summary.
+* arrange() changes the ordering of the rows.
+
+Provided by https://dplyr.tidyverse.org/
+
+
+&nbsp;
+
+```{r}
+emision_modificado <- emision %>%
+  mutate(POL_COMPL = paste(Sucursal, Producto, Poliza, sep = "-"))
+```
+&nbsp;
+
+```{r}
+str(emision_modificado)
+```
+&nbsp;
+
+```{r}
+#Primeros 4 digitos de un valor
+emision_modificado <- emision_modificado %>%
+  mutate(Año_cont = sub("^(\\d{4}).*$", "\\1", Fecha.Cont))
+#Ultimos 4 digitos de un valor
+#sub(".*(\\d+{4}).*$", "\\1", df)
+```
+&nbsp;
+
+```{r}
+str(emision_modificado)
+```
+
+&nbsp;
+
+```{r}
+emision_modificado <- emision_modificado %>%
+  select(-(c(Contrato,Fondo.Especia,Clave.Vehiculo.Santander)))
+```
+
+&nbsp;
+
+```{r}
+colnames(emision_modificado)
+```
+
+&nbsp;
+
+No guardamos lo siguiente en la variable, solo observen que pasa.
+
+```{r}
+emision_modificado %>%
+  select(ends_with("conductor")) %>%
+  head()
+```
+
+&nbsp;
+
+```{r}
+emision_modificado <- emision_modificado %>%
+  filter(Año_cont == "2018", Marca %in% c("MINI","Ferrari"))
+```
+&nbsp;
+
+```{r}
+head(emision_modificado)
+```
+&nbsp;
+
+```{r}
+emision_modificado <- emision_modificado %>%
+  group_by(Desc.de.Agente) %>%
+  summarise(cuenta = n())
+```
+
+
+&nbsp;
+
+
+```{r}
+emision_modificado
+```
+&nbsp;
+
+```{r}
+emision_modificado %>%
+  arrange(desc(cuenta))
+```
+```{r}
+emision_modificado <- emision_modificado %>%
+  arrange(cuenta)
+```
+
+&nbsp;
+
+
+```{r}
+emision_modificado
+```
+&nbsp;
+
+**...y la magia de `dplyr` es:          un solo PIPE!!!!!**
+
+&nbsp;
+
+```{r}
+emision %>%
+  mutate(POL_COMPL = paste(Sucursal, Producto, Poliza, sep = "-")) %>%
+  mutate(Año_cont = sub("^(\\d{4}).*$", "\\1", Fecha.Cont)) %>%
+  select(-(c(Contrato,Fondo.Especia,Clave.Vehiculo.Santander))) %>%
+  filter(Año_cont == "2018", Marca %in% c("MINI","Ferrari")) %>%
+  group_by(Desc.de.Agente, Marca) %>%
+  summarise(cuenta = n()) %>%
+  arrange(cuenta)
+```
+
+&nbsp;
+
+Lo guardan en su variable y listo!!!
+
+```{r}
+emision_modificado <- emision %>%
+  mutate(POL_COMPL = paste(Sucursal, Producto, Poliza, sep = "-")) %>%
+  mutate(Año_cont = sub("^(\\d{4}).*$", "\\1", Fecha.Cont)) %>%
+  select(-(c(Contrato,Fondo.Especia,Clave.Vehiculo.Santander))) %>%
+  filter(Año_cont == "2018", Marca %in% c("MINI","Ferrari")) %>%
+  group_by(Desc.de.Agente, Marca) %>%
+  summarise(cuenta = n()) %>%
+  arrange(cuenta)
+```
+
+&nbsp;
+
+Aplausos!!!
+
 ### R_ggplot
+
+&nbsp;
+
+### R_Rmd
 
 &nbsp;
 
 ### R_Text_minig
 
-&nbsp;
-
-### R_Rmd
 
