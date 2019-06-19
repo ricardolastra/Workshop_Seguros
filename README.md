@@ -1,5 +1,6 @@
 # Workshop_Seguros
-Excelente curso de R para principiantes con experiencia en seguros
+
+Workshop de R, 8 sesiones para lectura, exploración manejo de datos y reportes en instituciones de seguros.
 
 ## Notas
 *Las notas de cada sesión las pueden encontrar [aquí.](R_4_Insurance.Rmd)
