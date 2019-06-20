@@ -864,6 +864,10 @@ emision_modificado <- emision %>%
 
 Aplausos!!!
 
+Extra. Un link muy bueno para "regex"  https://www.rexegg.com/regex-quickstart.html 
+
+Y tambien este super bien explicado https://dev.to/emmawedekind/regex-cheat-sheet-2j2a
+
 ### R_ggplot
 
 `OBJETIVO:` **Graficar entendiendo los datos, escalas y tipos de gráficos, mejorar visualizaciones actuales**
@@ -1034,6 +1038,19 @@ Agregamos una sombra de bandas de confianza....
 p1 + geom_point() +
   geom_line(aes(y = Prima_predic))+
   geom_smooth()
+```
+
+Extra. Revisando los colores...
+
+
+```{r , warning=F, error=F, message=F}
+emision_resumen <- emision %>%
+  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE))) %>%
+  group_by(Fecha.Cont,Marca) %>%
+  summarise(Prima_E = sum(Prima.Emitida))
+#Colores con "colour" rellena con una 3ra variable relacionada a las Y´s directamente
+ggplot(emision_resumen, aes(x = log(Fecha.Cont), y = Prima_E, colour = Marca))+
+  geom_point()
 ```
 
 ### R_Rmd
