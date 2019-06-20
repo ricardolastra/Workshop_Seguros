@@ -744,7 +744,7 @@ emision_modificado <- emision %>%
 ```
 &nbsp;
 
-```{r}
+```{r, eval=FALSE}
 str(emision_modificado)
 ```
 &nbsp;
@@ -758,7 +758,7 @@ emision_modificado <- emision_modificado %>%
 ```
 &nbsp;
 
-```{r}
+```{r, eval=FALSE}
 str(emision_modificado)
 ```
 
@@ -793,7 +793,7 @@ emision_modificado <- emision_modificado %>%
 ```
 &nbsp;
 
-```{r}
+```{r, eval=FALSE}
 head(emision_modificado)
 ```
 &nbsp;
@@ -866,7 +866,175 @@ Aplausos!!!
 
 ### R_ggplot
 
+`OBJETIVO:` **Graficar entendiendo los datos, escalas y tipos de gráficos, mejorar visualizaciones actuales**
+
 &nbsp;
+
+Empezamos usando los datos de la ultima sesión.
+
+```{r}
+library(dplyr)
+library(readr)
+emision <- read.csv(list.files(pattern='EMISION'), header = T, skip = 2, stringsAsFactors=F)
+```
+Revisamos los datos:
+
+```{r, eval=FALSE}
+str(emision)
+```
+
+Si pudieron cargar `tidyverse` solo habiliten la libreria.
+
+```{r}
+library(ggplot2)
+```
+
+Si *NO* pudieron cargar `tidyverse`, descarguen `ggplot2`
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+&nbsp;
+
+Ventajas de `ggplot2`:
+
+ + Muy flexible
+ + Fácil de interpretar, sintaxis sencilla
+ + Sistema ya muy avanzado para graficar
+ + Ecosistema amplio
+ + Comunidad amplia, gran soporte
+ + Basado en el libro "The Grammar of Graphics"
+
+&nbsp;
+
+¿Cómo se usa?
+
+Empezamos con la función ggplot(), integrando nuestra base y sus variables (con aes()). Luego agregamos las coordenadas o puntos a graficar con geom_point() o con  geom_histogram(), luego las escalas ó colores (como puede ser scale_colour_brewer()), algunas especificaciones como  facet_wrap() y hasta títulos o marcas.
+
+&nbsp;
+
+¿Y si graficamos con R base?  `ggplot2` VS R base de una manera muy sencilla.
+
+```{r}
+hist(emision$Agte.UDI.2)
+```
+
+Y con `ggplot2` se ve lo mismo de la siguiente forma:
+
+```{r , warning=F, error=F, message=F}
+ggplot(emision, aes(x = Agte.UDI.2)) +
+  geom_histogram()
+```
+&nbsp;
+
+Aesthetic Mapping
+
+En el mundo de `ggplot2` *aesthetic* significa "algo que puedes ver". Puedes incluir las siguientes opciones:
+
+-   position (por ejemplo en el eje x o en el eje de las y´s)
+-   color (el color de relleno)
+-   fill (el color del grafico)
+-   shape (forma)
+-   linetype
+-   size (tamaño)
+
+Cada tipo de gráfico solo acepta un conjunto de datos, es natural de una gráfica de dos dimensiones.
+
+&nbsp;
+
+Objetos geométricos (`geom`)
+
+Son los tipos de gráficos que tenemos en cada imagen:
+
+-   Puntos (`geom_point`, para scatter plots, dot plots, etc.)
+-   Lineas (`geom_line`, para time series, trend lines, etc.)
+-   Diagrama de caja y brazo (`geom_boxplot`)
+
+Un gráfico al menos debe tener un objeto geométrico, y pueden ir agregando más con el símbolo +, que al ponerlo lo identa de manera correcta.
+
+Puedes tener una buena ayuda con los objetos disponibles de la siguiente forma:
+
+```{r, eval=FALSE}
+help.search("geom_", package = "ggplot2")
+```
+
+&nbsp;
+
+Un regalo...!
+
+```{r , warning=F, error=F, message=F}
+emision <- emision %>%
+  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE))) %>%
+  filter(Fecha.Cont<201813 & Fecha.Cont>201800)
+```
+Revisamos lo que pasó....
+
+```{r , warning=F, error=F, message=F}
+emision %>%
+  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE))) %>%
+  group_by(Fecha.Cont) %>%
+  summarise(Prima_E = sum(Prima.Emitida))
+```
+Y graficamos...
+
+```{r , warning=F, error=F, message=F}
+ggplot(emision, aes(y = Prima.Emitida, x = Fecha.Cont)) +
+  geom_point()
+```
+```{r , warning=F, error=F, message=F}
+ggplot(emision, aes(y = Prima.Emitida, x = Fecha.Cont)) +
+  geom_point() +
+  scale_x_continuous(limits = c(201801, 201812))+
+  ylab("Prima Emitida")+
+  xlab("Mes contable")
+```
+
+O queremos esto:
+
+```{r , warning=F, error=F, message=F}
+emision_resumen <- emision %>%
+  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE))) %>%
+  group_by(Fecha.Cont) %>%
+  summarise(Prima_E = sum(Prima.Emitida))
+```
+
+Y se ve mejor asi:
+
+```{r , warning=F, error=F, message=F}
+ggplot(emision_resumen, aes(y = Prima_E, x = Fecha.Cont)) +
+  geom_point() +
+  scale_x_continuous(limits = c(201801, 201812))+
+  ylab("Prima Emitida")+
+  xlab("Mes contable")
+```
+
+Le subimos el volumen... otro regalo!!!
+
+```{r , warning=F, error=F, message=F}
+#Una regresion lineal sencilla
+emision$pred.SC <- predict(lm(Prima.Emitida ~ log(Fecha.Cont), data = emision))
+#Subset
+emision_predic <- emision %>%
+  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE))) %>%
+  group_by(Fecha.Cont) %>%
+  summarise(Prima_E = sum(Prima.Emitida),
+            Prima_predic= sum(pred.SC))
+#De mejor interpretación
+p1 <- ggplot(emision_predic, aes(x = log(Fecha.Cont), y = Prima_E))
+
+p1 + geom_point() +
+  geom_line(aes(y = Prima_predic))
+```
+
+Agregamos una sombra de bandas de confianza....
+
+```{r , warning=F, error=F, message=F}
+p1 + geom_point() +
+  geom_line(aes(y = Prima_predic))+
+  geom_smooth()
+```
 
 ### R_Rmd
 
