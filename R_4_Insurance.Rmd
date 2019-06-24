@@ -1115,13 +1115,43 @@ install.packages("reticulate")
 library(reticulate)
 ```
 
-Para correr chunks de Python.
+para correr chunks de Python como sigue:
 
 
 ```{python}
 x = "Hello World!"
 print(x)
 ```
+&nbsp;
+
+> Ejercicio 2
+
+Usando la base de emision de la sesión 6.
+
+1.  Calcula el total de primas emitidas
+```{r}
+## Escribe tu respuesta en un chunk de un RMD
+
+```
+2.  Filtra la base para sacar solo la prima de los autos MINI
+```{r}
+## Escribe tu respuesta en un chunk de un RMD
+
+```
+3.  Agrupa y summariza el total de MINI por prima emitida y prima pagada, recuerda convertir a numero como el "regalo"
+```{r}
+## Escribe tu respuesta en un chunk de un RMD
+
+```
+4.  Del resumen anterior, haz una grafica lo mejor que puedas, que si diga algo visualmente!!!
+```{r}
+## Escribe tu respuesta en un chunk de un RMD
+
+```
+
+Todo lo anterior en un RMD con tus datos!
+
+- Lo envian por mail hasta el Miercoles 26 a las 11:59:00 p.m.
 
 &nbsp;
 
