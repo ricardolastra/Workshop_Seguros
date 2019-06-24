@@ -24,8 +24,9 @@ knitr::opts_chunk$set(echo = TRUE)
 + R_Basico_1.2
 + R_dplyr
 + R_ggplot
-+ R_Text_minig
 + R_Rmd
++ R_Text_minig
++ Bonus
 
 &nbsp;
 
@@ -1039,24 +1040,187 @@ p1 + geom_point() +
   geom_line(aes(y = Prima_predic))+
   geom_smooth()
 ```
+&nbsp;
 
 Extra. Revisando los colores...
 
 
 ```{r , warning=F, error=F, message=F}
 emision_resumen <- emision %>%
-  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE))) %>%
-  group_by(Fecha.Cont,Marca) %>%
-  summarise(Prima_E = sum(Prima.Emitida))
+  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE)),
+         Prima.Pagada= as.numeric(sub(",", "", Prima.Pagada, fixed=TRUE))) %>%
+  group_by(Fecha.Cont,Marca,Desc..Grupo) %>%
+  filter(grepl('G|R|F|Mini', Desc..Grupo)) %>%
+  summarise(Prima_E = sum(Prima.Emitida),
+            Prima_P = sum(Prima.Pagada))
 #Colores con "colour" rellena con una 3ra variable relacionada a las Y´s directamente
 ggplot(emision_resumen, aes(x = log(Fecha.Cont), y = Prima_E, colour = Marca))+
   geom_point()
 ```
 
+&nbsp;
+
+Nice!!!
+
+
+```{r, eval=FALSE}
+install.packages("ggthemes")
+```
+
+```{r , warning=F, error=F, message=F}
+## Temas extra para mejorar la parte visual
+library(ggthemes)
+ggplot(emision_resumen, mapping = aes(x = log(Fecha.Cont), y = Prima_E)) + geom_point(aes(size=Prima_P, color=Marca)) + 
+  geom_text(aes(label=Desc..Grupo, vjust=-1.0, hjust=0, alpha=0.5)) +
+  guides(fill=FALSE, alpha=FALSE, color=FALSE) + 
+  labs(x = 'Fecha Contable (Escala Logaritmica)', y = 'Primas emitidas', size='Prima Pagada' ) + theme_hc()
+```
+&nbsp;
+
 ### R_Rmd
+
+`OBJETIVO:` **Crear, guardar, ejecutar codigo en un reporte**
+
+> RMD/R Markdown
+
+La creación de documentos con Markdown R comienza con un archivo de extensión .Rmd, el cual contiene una combinación de markdown (contenido con formato de texto simple) y trozos de código R. El archivo .Rmd se alimenta a `knitr`, que ejecuta todos los trozos de código R y crea un nuevo documento de reducción (.md) que incluye el código R y su salida.
+
+Ventajas respecto a otras herramientas de reportes:
+
+  1. Tiene gran diversidad de formatos de salida, como html, pdf, bookdown, latex-pdf, slide, dashboard, folletos, entre otros.
+  2. Reproducible
+  3. Se puede ejecutar en tiempo real
+  4. Excelente framework para ciencia de datos
+  5. Se generan reportes de alta calidad que pueden ser compartidos en grandes audiencias
+  
+&nbsp;
+
+Iniciamos
+
+```{r, eval=FALSE}
+install.packages("rmarkdown")
+library(rmarkdown)
+```
+
+Para efectos practicos seguiremosa el siguiente tutorial que nuestros amigos de Rstudio ya hicieron.
+
+https://rmarkdown.rstudio.com/lesson-1.html
+
+&nbsp;
+
+También instalamos lo siguiente:
+
+```{r, eval=FALSE}
+install.packages("reticulate")
+library(reticulate)
+```
+
+Para correr chunks de Python.
+
+
+```{python}
+x = "Hello World!"
+print(x)
+```
 
 &nbsp;
 
 ### R_Text_minig
 
+`OBJETIVO:` **Ultima sesión**
 
+&nbsp;
+
+&nbsp;
+
+20 minutos para un buen tutorial de REGEX
+
+https://tutorialzine.com/2014/12/learn-regular-expressions-in-20-minutes
+
+&nbsp;
+
+Herramienta para probar y depurar expresiones regulares.
+
+https://regex101.com/
+
+&nbsp;
+
+### Bonus
+
+`OBJETIVO:` **Hacer presentes algunos temas de los muchos que existen en el universo de R y los datos**
+
+  A. Strings
+  
+  Cadenas de caracteres. 
+  
+  B. Fechas
+  
+  Son de las cosas que más dolores de cabeza les dan a algunos, sin embargo hay librerías que lo hacen sencillo, las fechas son difíciles de manejar por los formatos en los que cada sistema las almacena, este no depende de los sistemas, sino de la necesidad del usuario, de la zona horaria, y en algunos casos son solo días, meses o horas con minutos y segundos los que se necesitan.  
+  
+  Una magnifica libreria es `lubridate` la cual soporta instantes, intervalos, duraciones y periodos.
+  
+```{r , warning=F, error=F, message=F}  
+fecha <- Sys.Date()
+fechas <- seq(fecha, length.out=12, by = "1 month")
+fechas
+```
+  C. Factores
+  
+  Cuando uno quiere analizar datos, regularmente necesita variables que funcionan como etiquetas. Estas etiquetas pueden ser contadas, pero no sumadas. A este tipo de variables se les conoce como variables categóricas y en R se llaman factores.
+
+```{r , warning=F, error=F, message=F}  
+mascotas <- c("P", "G", "P", "P", "G", "P")
+mascotas <- factor(mascotas)
+mascotas
+```
+
+```{r , warning=F, error=F, message=F}  
+mascotas <- factor(c("P", "G", "P", "P", "G", "P","G"), levels=c("G", "P"), labels=c("GATO", "PERRO"))
+mascotas
+```  
+  D. Paleta de colores
+  
+  En el mundo visual, para tunnear nuestros graficos, la libreria "RColorBrewer" es una herramienta basica, contiene
+
+```{r , warning=F, error=F, message=F}
+#install.packages("RcolorBrewer")
+library(RColorBrewer)
+#create a sequential palette for usage and show colors
+mypalette<-brewer.pal(7,"Greens")
+image(1:7,1,as.matrix(1:7),col=mypalette,xlab="Tonos de Verde",
+       ylab="",xaxt="n",yaxt="n",bty="n")
+```  
+```{r , warning=F, error=F, message=F}
+## display a qualitative palette
+display.brewer.pal(7,"Accent")
+``` 
+
+Mas información en: https://www.rdocumentation.org/packages/RColorBrewer/versions/1.1-2/topics/RColorBrewer
+
+  E. Listas
+  
+  Objeto basico de R. 
+  
+  F. tidyr
+  
+  Ajuste de datos.
+  
+  G. Intermedios-Avanzados R
+    
+    i) Shiny
+    ii) Simulación
+    iii) Scrapping
+    iv) Algoritmos de ML
+    v) Creando un paquete
+    
+  H. Otras herramientas
+    
+    i) Git
+    ii) Spark
+    iii) SQLite, JS, C
+    iv) Docker
+    v) Bash programming
+    
+Muchas gracias!!!
+    
+    
