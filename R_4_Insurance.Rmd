@@ -1102,13 +1102,17 @@ install.packages("rmarkdown")
 library(rmarkdown)
 ```
 
-Para efectos practicos seguiremosa el siguiente tutorial que nuestros amigos de Rstudio ya hicieron.
-
-https://rmarkdown.rstudio.com/lesson-1.html
+Para efectos practicos seguiremos el siguiente tutorial que nuestros amigos de Rstudio ya hicierón.
 
 &nbsp;
 
-También instalamos lo siguiente:
+https://rmarkdown.rstudio.com/lesson-1.html
+
+(Seguimos lo más que se pueda esas notas, si no terminamos lo hacen en un rato libre, vale la pena!!!)
+
+&nbsp;
+
+También instalamos lo siguiente para probar las ultimas maravillas que se pueden hacer en un RMD:
 
 ```{r, eval=FALSE}
 install.packages("reticulate")
@@ -1122,11 +1126,13 @@ para correr chunks de Python como sigue:
 x = "Hello World!"
 print(x)
 ```
+
 &nbsp;
+
 
 > Ejercicio 2
 
-Usando la base de emision de la sesión 6.
+Usando la base de emision de la sesión 6. (pueden volver a cargar la base emision como yo lo hice o como ustedes crean conveniente.)
 
 1.  Calcula el total de primas emitidas
 ```{r}
@@ -1179,11 +1185,13 @@ https://regex101.com/
 
 `OBJETIVO:` **Hacer presentes algunos temas de los muchos que existen en el universo de R y los datos**
 
-  A. Strings
+&nbsp;
+
+####  A. Strings
   
   Cadenas de caracteres. Ultima sesión.
   
-  B. Fechas
+####  B. Fechas
   
   Son de las cosas que más dolores de cabeza les dan a algunos, sin embargo hay librerías que lo hacen sencillo, las fechas son difíciles de manejar por los formatos en los que cada sistema las almacena, este no depende de los sistemas, sino de la necesidad del usuario, de la zona horaria, y en algunos casos son solo días, meses o horas con minutos y segundos los que se necesitan.  
   
@@ -1194,7 +1202,49 @@ fecha <- Sys.Date()
 fechas <- seq(fecha, length.out=12, by = "1 month")
 fechas
 ```
-  C. Factores
+&nbsp;
+
+más ejemplos...
+
+Accedemos al formato `dd/mm/aaaa` con la funcion **dmy** y obtenemos el mes de la fecha de nacimiento:
+
+```{r , warning=F, error=F, message=F}
+library(lubridate)
+bday <- dmy("29/05/1986")
+month(bday)
+```
+
+Accedemos al día de la semana de ese año:
+
+```{r , warning=F, error=F, message=F}
+wday(bday, label = TRUE)
+```
+
+Y accedemos también al dia del año actual:
+
+```{r , warning=F, error=F, message=F}
+year(bday) <- 2019
+wday(bday, label = TRUE)
+```
+Y en formato `aaaa/mm/dd hr:min:seg` con la funcion **ymd_hms** y obtenemos el mes de la fecha de esta forma:
+
+```{r , warning=F, error=F, message=F}
+time <- ymd_hms("2019-06-25 15:30:30")
+time
+```
+Funciones de ayuda para manipular time zones: with_tz(), force_tz()
+
+```{r , warning=F, error=F, message=F}
+# Changes printing
+with_tz(time, "America/Chicago")
+```
+
+```{r , warning=F, error=F, message=F}
+# Changes time
+force_tz(time, "America/Chicago")
+```
+
+####  C. Factores
   
   Cuando uno quiere analizar datos, regularmente necesita variables que funcionan como etiquetas. Estas etiquetas pueden ser contadas, pero no sumadas. A este tipo de variables se les conoce como variables categóricas y en R se llaman factores.
 
@@ -1208,7 +1258,7 @@ mascotas
 mascotas <- factor(c("P", "G", "P", "P", "G", "P","G"), levels=c("G", "P"), labels=c("GATO", "PERRO"))
 mascotas
 ```  
-  D. Paleta de colores
+####  D. Paleta de colores
   
   En el mundo visual, para tunnear nuestros graficos, la libreria "RColorBrewer" es una herramienta basica, contiene
 
@@ -1227,7 +1277,7 @@ display.brewer.pal(7,"Accent")
 
 Mas información en: https://www.rdocumentation.org/packages/RColorBrewer/versions/1.1-2/topics/RColorBrewer
 
-  E. Listas
+####  E. Listas
   
 Algo muy util en programación orientada a objetos son las listas, son parecidas a los vectores, pero con una diferencia importante: pueden tener los elementos de diferentes tipos.
 
@@ -1298,11 +1348,13 @@ renta[[2]]
 
 &nbsp;
   
-  F. tidyr
+####  F. tidyr
   
   Ajuste de datos. Ultima sesión
   
-  G. Intermedios-Avanzados R
+&nbsp;
+  
+####  G. Intermedios-Avanzados R
     
     i) Shiny
     ii) Simulación
@@ -1310,14 +1362,16 @@ renta[[2]]
     iv) Algoritmos de ML
     v) Creando un paquete
     vi) Paralelo
+    vii) API´s
     
-  H. Otras herramientas
+####  H. Otras herramientas
     
     i) Git
     ii) Spark
     iii) SQLite, JS, C
     iv) Docker
     v) Bash programming, paralelo
+    vi) AWS (Amazon cloud services)
     
 Muchas gracias!!!
     
