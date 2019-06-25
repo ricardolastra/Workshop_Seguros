@@ -1181,7 +1181,7 @@ https://regex101.com/
 
   A. Strings
   
-  Cadenas de caracteres. 
+  Cadenas de caracteres. Ultima sesión.
   
   B. Fechas
   
@@ -1229,11 +1229,78 @@ Mas información en: https://www.rdocumentation.org/packages/RColorBrewer/versio
 
   E. Listas
   
-  Objeto basico de R. 
+Algo muy util en programación orientada a objetos son las listas, son parecidas a los vectores, pero con una diferencia importante: pueden tener los elementos de diferentes tipos.
+
+```{r , warning=F, error=F, message=F}
+lista <- list(1, 2, 3, 4, 5)
+lista
+```
+&nbsp;
+
+El operador de extracción ([), devuelve una lista
+
+&nbsp;
+
+```{r , warning=F, error=F, message=F}
+lista[1]
+```
+
+```{r , warning=F, error=F, message=F}
+is.list(lista[1])
+```
+
+```{r , warning=F, error=F, message=F}
+is.vector(lista[1])
+```
+&nbsp;
+
+El operador [[ devuelve un vector
+
+```{r , warning=F, error=F, message=F}
+lista[[1]]
+```
+
+```{r , warning=F, error=F, message=F}
+is.list(lista[[1]])
+```
+
+```{r , warning=F, error=F, message=F}
+is.vector(lista[[1]])
+```
+
+&nbsp;
+
+Asi es como se ven los diferentes datos de 
+
+```{r , warning=F, error=F, message=F}
+renta <- list(direccion="Masarik 306", m2=c(10, 15, 3), dlls.men=2500)
+renta
+```
+&nbsp;
+
+Existe otro operador de acceso: $
+
+&nbsp;
+
+```{r , warning=F, error=F, message=F}
+renta$dlls.men
+```
+
+
+```{r , warning=F, error=F, message=F}
+renta[3]
+```
+
+
+```{r , warning=F, error=F, message=F}
+renta[[2]]
+```
+
+&nbsp;
   
   F. tidyr
   
-  Ajuste de datos.
+  Ajuste de datos. Ultima sesión
   
   G. Intermedios-Avanzados R
     
@@ -1242,6 +1309,7 @@ Mas información en: https://www.rdocumentation.org/packages/RColorBrewer/versio
     iii) Scrapping
     iv) Algoritmos de ML
     v) Creando un paquete
+    vi) Paralelo
     
   H. Otras herramientas
     
@@ -1249,7 +1317,7 @@ Mas información en: https://www.rdocumentation.org/packages/RColorBrewer/versio
     ii) Spark
     iii) SQLite, JS, C
     iv) Docker
-    v) Bash programming
+    v) Bash programming, paralelo
     
 Muchas gracias!!!
     

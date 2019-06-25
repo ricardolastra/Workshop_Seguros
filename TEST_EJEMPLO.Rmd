@@ -1,0 +1,57 @@
+---
+title: "EJERCICIO_2"
+author: "RICARDO LASTRA"
+date: "25 de junio de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE, warning=FALSE}
+#install.packages("viridis")
+library(viridis)
+```
+## Colores del Magma
+
+```{r fig.cap= "Grafica de magma de un volcan"}
+image(volcano, col = viridis(200, option = "A"))
+```
+
+&nbsp;
+
+
+**FORMAS DE DECLARAR Ó GUARDAR Ó ALMACENAR Ó MANTENER VARIABLES:**
+
+```{r }
+x = 3
+y <- 4
+5 -> z
+```
+
+&nbsp;
+
+Ventajas de `ggplot2`:
+ 
+ + Muy flexible
+ + Fácil de interpretar, sintaxis sencilla
+ + Sistema ya muy avanzado para graficar
+ 
+
+```{r , warning=F, error=F, message=F}
+renta <- list(direccion="Masarik 306", m2=c(10, 15, 3), dlls.men=2500)
+renta
+```
+&nbsp;
+
+## Otros lenguajes en un RMD
+
+```{python }
+#library(reticulate)
+x = "Hello World!"
+print(x)
+```
+&nbsp;
+
+Mi primer RMD, por ** SU NOMBRE **
