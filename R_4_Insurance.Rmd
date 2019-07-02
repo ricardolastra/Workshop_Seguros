@@ -1133,23 +1133,34 @@ Usando la base de emision de la sesión 6. (pueden volver a cargar la base emisi
 
 1.  Calcula el total de primas emitidas
 ```{r}
-## Escribe tu respuesta en un chunk de un RMD
-
+library(readr)
+library(dplyr)
+emision <- read.csv(list.files(pattern='EMISION'), header = T, skip = 2, stringsAsFactors=F)
+emision <- emision %>%
+  mutate(Prima.Emitida= as.numeric(sub(",", "", Prima.Emitida, fixed=TRUE)),Prima.Pagada= as.numeric(sub(",", "", Prima.Pagada, fixed=TRUE)))
+sum(emision$Prima.Emitida)
 ```
 2.  Filtra la base para sacar solo la prima de los autos MINI
 ```{r}
-## Escribe tu respuesta en un chunk de un RMD
-
+emision %>%
+  filter(Marca=="MINI") %>%
+  summarise(Prima.Emitida = sum(Prima.Emitida))
 ```
 3.  Agrupa y summariza el total de MINI por prima emitida y prima pagada, recuerda convertir a numero como el "regalo"
 ```{r}
-## Escribe tu respuesta en un chunk de un RMD
+emi_grafica <- emision %>%
+  filter(Marca=="MINI") %>%
+  group_by(Fecha.Cont) %>%
+  summarise(Prima.Emitida = sum(Prima.Emitida),Prima.Pagada = sum(Prima.Pagada))
 
+emi_grafica
 ```
 4.  Del resumen anterior, haz una grafica lo mejor que puedas, que si diga algo visualmente!!!
-```{r}
-## Escribe tu respuesta en un chunk de un RMD
-
+```{r , fig.width= 8, fig.height=5, fig.align="center"}
+library(ggplot2)
+ggplot(emi_grafica, aes(Fecha.Cont,Prima.Emitida)) +
+  geom_point(size=4, color="red") +
+  geom_line()
 ```
 
 Todo lo anterior en un RMD con tus datos!
