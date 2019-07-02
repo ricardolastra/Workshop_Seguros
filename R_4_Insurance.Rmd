@@ -7,10 +7,6 @@ output:
       after_body: footer.html
 ---
 
-html_document:
-    includes:
-      after_body: footer.html
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -27,6 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 + R_Rmd
 + R_Text_minig
 + Bonus
++ Librerías
 
 &nbsp;
 
@@ -36,7 +33,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 &nbsp;
 
-Recomendación como en todo, dejen a un lado los paradigmas, cosas que han escuchado, leido en diversos medios, y preparense para tener una mente dispuesta. 
+Recomendación como en todo, dejen a un lado los paradigmas, cosas que han escuchado, leído en diversos medios, y preparense para tener una mente dispuesta. 
 
 &nbsp;
 
@@ -86,7 +83,7 @@ knitr::include_graphics("Imagenes/RWorld.jpeg")
 
 &nbsp;
 
-Python y R ya como un mismo lenguaje, es por ello que empezamos con un leguaje poderoso, que ha ganadado el respeto de Python.
+Python y R ya como un mismo lenguaje, es donde vemos el terreno que ha ganado R, Markdown y otras herramientas al apoyarse en un magnífico lenguaje.
 
 &nbsp;
 
@@ -1163,11 +1160,26 @@ Todo lo anterior en un RMD con tus datos!
 
 ### R_Text_minig
 
-`OBJETIVO:` **Ultima sesión**
+`OBJETIVO:` **Minar, explorar, limpiar, visualizar, diseñar y construir modelos**
 
 &nbsp;
 
+Pueden ir descargando e instalando librerias!
+
+```{r , eval=F}
+#install.packages("tm")
+#install.packages("qdap")
+#install.packages("wordcloud")
+library(tm)
+library(qdap)
+library(wordcloud)
+```
+
 &nbsp;
+
+No se olviden de leer esto para los interesados en texto, y si, es real el link!!! y si es el tidyverse para texto!!! Awsome!!!
+
+https://www.tidytextmining.com/tidytext.html
 
 20 minutos para un buen tutorial de REGEX
 
@@ -1188,8 +1200,92 @@ https://regex101.com/
 &nbsp;
 
 ####  A. Strings
-  
-  Cadenas de caracteres. Ultima sesión.
+
+Los *strings* son cualquier valor que se encuentre entre comillas ó comillas sencillas. A estos valores `R` los trata como *strings*, se almacenan entre comillas aunque en la UI solo se vean comillas sencillas.
+
+
+```{r , warning=F, error=F, message=F}   
+a <- 'Empieza y termina con comilla sencilla'
+a
+
+b <- "Empieza y termina con comillas"
+b
+
+c <- "Comilla sencilla ' en medio de comillas"
+c
+
+d <- 'Comillas " en medio de comilla sencilla al inicio y al final'
+d
+```
+
+Ejemplo de *strings* invalidos:
+
+```{r , eval=F} 
+e <- 'Comillas mezcladas" 
+Resultado:
+INCOMPLETE_STRING
+```
+```{r , eval=F} 
+f <- 'Una comilla sencilla ' dentro de otras comillas sencillas'
+Resultado:
+INCOMPLETE_STRING
+```
+```{r , eval=F} 
+g <- "Comillas " dentro de comillas dobles"
+Resultado:
+INCOMPLETE_STRING
+```
+
+Para concatenar strings usamos algo muy sencillo `paste`
+
+```{r } 
+a <- "D00"
+b <- '1234'
+c <- "2019 1"
+
+print(paste(a,b,c))
+
+print(paste(a,b,c, sep = "-"))
+
+print(paste(a,b,c, sep = "", collapse = ""))
+```
+Para formatear los strings también usamos algo sencillo:
+
+```{r } 
+# Justificar a la Izquierda
+cadena <- format("Cuota", width = 6, justify = "l")
+cadena
+
+# Justificar al centro
+cadena <- format("Cuota", width = 9, justify = "c")
+cadena
+```
+Podemos contar los caracteres de una oración con `nchar()`
+
+```{r } 
+cadena2 <- nchar("Prima Emitida en $ usd...")
+cadena2
+```
+Podemos cambiar a mayúsculas o minúsculas.
+```{r } 
+toupper(cadena)
+```
+```{r } 
+tolower(cadena)
+```
+Por ultimo podemos hacer substrings más cortos de uno ya existente
+
+```{r }
+# Extraer caracteres de la 5ta a la  7th posición
+cadena3 <- substring("Ricardo Lastra", 5, 7)
+cadena3
+```
+
+Adicional a R base pueden revisar la libreria `stringr` cuya sintaxis es muy amigable, esta dentro del universo Tidy que ya conocemos. 
+
+Pueden consultar el siguiente link https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html
+
+
   
 ####  B. Fechas
   
@@ -1226,7 +1322,11 @@ Y accedemos también al dia del año actual:
 year(bday) <- 2019
 wday(bday, label = TRUE)
 ```
+&nbsp;
+
 Y en formato `aaaa/mm/dd hr:min:seg` con la funcion **ymd_hms** y obtenemos el mes de la fecha de esta forma:
+
+&nbsp;
 
 ```{r , warning=F, error=F, message=F}
 time <- ymd_hms("2019-06-25 15:30:30")
@@ -1350,8 +1450,159 @@ renta[[2]]
   
 ####  F. tidyr
   
-  Ajuste de datos. Ultima sesión
+Otro tema muy importante para la manipulación y manejo de datos son formatos denominados *tidy*, es una abstracción de datos limpios, antes del concepto ya existian datos almacenados de esta forma, pero `R` nos brinda una serie de verbos ó funciones para convertirlos como queremos de una manera simple y sencilla.
+
+Mas info revisen el siguiente artículo:
+
++ [Artículo Tidy Hadley Wickham](http://vita.had.co.nz/papers/tidy-data.pdf)
+
+Asi los queremos:
+
+![Tidy Data](http://r4ds.had.co.nz/images/tidy-1.png)
   
+Se acomoda cada *variable* en una *columna*
+
+Cada *observación* en un *renglón*
+
+Y cada *valor* en una *celda* ó *casilla*.
+
+  + Fuente: [Presentaciones de Hadley Wickham](http://vita.had.co.nz/papers/tidy-data-pres.pdf)
+  
+&nbsp;
+
+*¿Cómo podemos encontrar la información almacenada en el mundo de los datos?*
+
+Aquí algunos ejemplos:
+
+Table: Observación con datos implícitos
+
+||Lat|Long|Indicador|
+|:----:|:------:|:-------:|:--------:|
+|Obs1| \# | \# | \# | 
+
+
+Table: Con fecha implícita
+
+| | lugar | indicador |
+|:---:|:-----:|:-----:|
+|Obs 1 |  | |
+|Obs 2 | |  |
+
+
+Table: Otro con Fecha implícita 
+
+| |Fecha 1 | Fecha 2 |
+|:---:|:-----:|:------:|
+|lugar 1|    |   |
+|lugar 2|  | |
+
+Table: Uno más!!!
+
+|  |  Fecha 1 | Fecha 2 | ... |
+|:-----:|:-------:|:-------:|:------:|
+| **LUGAR 1** |   |    |   |  |
+| Ind 1 |   #  | #   | ... |
+| Ind 2 |   #  |  #   | ... |
+| **LUGAR 2** |   |    |   |  |
+| Ind 1 |   #  | #   | ... |
+| Ind 2 |   #  |  #   | ... |
+
+Tablas que también existen en otro tipo de formatos: 
+
+||Indicador 1|Indicador 2|
+|:--:|:--:|:---:|
+
+||Fecha 1| Fecha 2| Fecha 1| Fecha 2|
+|:-----:|:--:|:-------:|:-----:|:-----:|
+|lugar 1| Ind 1| Ind 1 | Ind 2| Ind 2|
+|lugar 1| Ind 1| Ind 1 | Ind 2| Ind 2|
+
+Otros ejemplos: 
+
++ Nombres de las columnas representan valores de los datos en lugar de nombres de variables -el nombre de un lugar por ejemplo-
++ Una columna contiene varias variables en lugar de una variable 
++ Una tabla contiene más de una unidad de observación
++ Las variables están contenidas en los renglones y columnas, en lugar de sólo columnas.
++ Los datos de una unidad observacional están dispersas en varios *data sets*
+
+Usando `tidyr` se ve como sigue:
+
+```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+library(tidyr)
+messy <- data_frame(nombre=c("juan.perez.lopez","martha.lopez.benitez",
+                             "jesus.ramirez.perez","jose.martinez.lopez",
+                             "aurora.saldivar.salazar"),
+                    genero_edad=c("m.35","f.23","m.30","m.25","f.33"),
+                    time=c(1,3,4,5,6))
+
+messy
+```
+
+Tendríamos que dejarlo *tidy*:
+
++ Separando el nombre
+```{r echo=T, warning=F, error=F, message=F}
+semi_messy <- messy %>% separate(col=nombre, into=c("nombre",
+                                      "apellido_paterno",
+                                      "apellido_materno"), 
+                   sep="\\.")
+
+semi_messy
+```
+
++ Separando género y edad
+
+
+```{r echo=T, warning=F, error=F, message=F}
+clean <- semi_messy %>% separate(col=genero_edad, into=c("genero","edad"), 
+                   sep="\\.")
+
+clean
+```
+
+Otro ejemplo: ¿Qué está mal?
+
+```{r echo=T, warning=F, error=F, message=F}
+messy <- data_frame(pais=c(rep("Afganistan",4),
+                           rep("Brazil",4),
+                           rep("China",4)),
+                    year=c(rep(1999,2),rep(2000,2),
+                           rep(1999,2),rep(2000,2),
+                           rep(1999,2),rep(2000,2)),
+                    llave=c("casos","poblacion","casos","poblacion",
+                          "casos","poblacion","casos","poblacion",
+                          "casos","poblacion","casos","poblacion"),
+                    valor=c(75,1300000,134,1400000,
+                            10000,100000000,12000,120000000,
+                            56000,150000000,60000,170000000))
+
+messy
+```
+
+Lo deberíamos arreglar con: 
+
+```{r echo=TRUE, error=FALSE, message=FALSE, warning=FALSE}
+clean <- messy %>% spread(key=llave, value=valor, fill=NA)
+
+clean
+```
+
+El último
+
+```{r echo=TRUE, error=FALSE, message=FALSE, warning=FALSE}
+stocks <- data_frame(
+  time = as.Date('2009-01-01') + 0:9,
+  X = rnorm(10, 0, 1),
+  Y = rnorm(10, 0, 2),
+  Z = rnorm(10, 0, 4)
+)
+
+stocks
+
+stocks %>% gather(stock, price, -time)
+```
+
+
 &nbsp;
   
 ####  G. Intermedios-Avanzados R
@@ -1364,6 +1615,8 @@ renta[[2]]
     vi) Paralelo
     vii) API´s
     
+&nbsp;
+
 ####  H. Otras herramientas
     
     i) Git
@@ -1374,5 +1627,20 @@ renta[[2]]
     vi) AWS (Amazon cloud services)
     
 Muchas gracias!!!
+
+### Librerías
+
+  + library(tidyverse)
+  + library(readr)
+  + library(data.table)
+  + library(dplyr)
+  + library(ggplot2)
+  + library(ggthemes)
+  + library(rmarkdown)
+  + library(reticulate)
+  + library(lubridate)
+  + library(RColorBrewer)
+  + library(tidyr)
+
     
     
