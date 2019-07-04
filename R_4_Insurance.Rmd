@@ -1177,13 +1177,149 @@ Todo lo anterior en un RMD con tus datos!
 
 Pueden ir descargando e instalando librerias!
 
-```{r , eval=F}
+```{r, echo=T, warning=F, error=F, message=F}
 #install.packages("tm")
 #install.packages("qdap")
 #install.packages("wordcloud")
 library(tm)
-library(qdap)
+#library(qdap)
 library(wordcloud)
+```
+
+En una carpeta ponemos algunos libros, en este caso 2 versiones de la Biblia ed 1602 y 1909
+
+```{r }
+biblia_corpus <- VCorpus(DirSource("C:/Users/Administrador/Desktop/DOC/WORKSHOP_R/Workshop_Seguros/Texto", encoding = "UTF-8"),readerControl = list(language = "es-419"))
+inspect(biblia_corpus[1:2])
+```
+Generamos una función que limpia nuestro texto, ojo, `replace_abbreviation` del paquete `qdap` yo no lo puedo instalar por falta de version de Java en 32 bit, que es la configuración actual de mi `R`, a muchos si les va a jalar.
+
+```{r }
+#Función de funciones de r base y tm
+
+clean_corpus <- function(corpus){
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  #corpus <- tm_map(corpus, content_transformer(replace_abbreviation))
+  corpus <- tm_map(corpus, removeNumbers)
+  corpus <- tm_map(corpus, removeWords, c(stopwords("en"), "que"
+                                          ,"los", "por","porque", "mas", "del", "the", "las", "para", 
+                                          "con", "como", "entonces", "project", "and", "you", "sus",
+                                          "también", "todo", "les", "ellos", "this", "with", "había",
+                                          "todos", "tambien", "šus","vosotros", "gutenbergtm", "fue",
+                                          "dicho", "una", "uno", "entre", "este", "esto", "diziendo", "gutenberg"))
+  return(corpus)
+}
+```
+
+... y limpiamos!
+
+```{r }
+biblia_corpus <- clean_corpus(biblia_corpus)
+```
+
+&nbsp;
+
+
+#### Qué hace cada función?
+
+R base y tm:
+  
+tolower(): Pasamos todo a minúsculas (Cuidado si se buscan nombre propios) (R base)
+removePunctuation(): Elimina puntuación (paquete tm)
+removeNumbers(): Elimina numeros  (cuidado si se buscan cantindades) (paquete tm)
+stripWhitespace(): Quita espacios extra (paquete tm)
+removeWords(): Elimina palabras, muy útil combinarla con stopwords() (paquete tm)
+
+Paquete qdap:
+  
+bracketX(): Elimina lo que esté entre paréntesis.
+replace_number(): Pasa los numeros a palabras (por ejemplo. «2» pasa a «two», tener en cuenta que el ejemplo se utiliza ingles)
+replace_abbreviation(): camba abreviaciones por la versión completa  (por ejemplo «Sr» pasa a «Senior»)
+replace_contraction(): Elimina contracciones (por ejemplo «can’t» pasa «can not»)
+replace_symbol() Pasa símbolos a palabras (por ejemplo «@» pasa a «at»)
+
+De la función para limpiar el corpus de arriba quizá lo mas interesante a destacar es eliminar las palabras comunes con removeWords(). Algunas líneas más adelante veremos la importancia de limpiar términos que no aportan información útil.
+
+Vamos a obtener la frecuencia con la que aparecen los términos en la colección de documentos que tenemos, para ellos seguiremos los siguientes pasos:
+  
+  1. Creamos una matriz de términos por documentos con TermDocumentMatrix() de tm.
+  2. La transformamos en matriz as.matrix.
+  3. Sumamos por filas para obtener el número de veces que aparece cada término.
+  4. Creamos una matriz de términos por documento, (Term-Document Matrix).
+
+Matriz por términos de documentos
+
+```{r }
+biblia_tdm <- TermDocumentMatrix(biblia_corpus)
+inspect(biblia_tdm)
+```
+Convertimos
+
+```{r }
+biblia_m <- as.matrix(biblia_tdm)
+head(biblia_m)
+```
+Sumamos las filas de cada versión de libro
+
+```{r }
+biblia_words <- sort(rowSums(biblia_m), decreasing = T) 
+head(biblia_words)
+```
+Obtenemos matriz de frecuencias por palabra
+
+```{r }
+biblia_freq <- data.frame(terms = names(biblia_words), num = biblia_words)
+head(biblia_freq) 
+```
+Hacemos nuestra fantastica imagen!
+
+```{r }
+wordcloud(biblia_freq$terms, biblia_freq$num, max.words = 75, colors = c( "grey", "orange", "red"))  
+```
+&nbsp;
+
+#### Algoritmos de Texto
+
+Comentamos que construiríamos  modelos, para ellos existen algoritmos de texto muy poderosos, aquí uno muy bueno, *from scratch*, el famoso "Word2vec" usado en NLP:  https://gist.github.com/primaryobjects/8038d345aae48ae48988906b0525d175
+
+Sin embargo ya hay implementaciones buenísimas, con varios algoritmos y es oficial de `R`.
+
+https://cran.r-project.org/web/packages/stringdist/index.html
+
+&nbsp;
+
+De nuestra matriz `biblia_freq`, seleccionamos las palabras con una frecuencia mayor a 50:
+
+```{r }
+biblia_freq2 <- biblia_freq %>%
+  filter(num>50) 
+```
+Cargamos super libreria llena de algoritmos...
+
+```{r, echo=T, warning=F, error=F, message=F }
+#install.packages("stringdist")
+library(stringdist)
+```
+Obtenemos palabras unicas con mayor frecuencia y pasamos algoritmo `Jaro-Winkler` ó distancia winkler.
+
+Nota.La libreria tiene algoritmos como el de `Levenstein`, `Jaccard`, `qgram`, `coseno`, entre otros.
+
+```{r }
+uniquewords <- unique(as.character(biblia_freq2$terms))
+distancewords <- stringdistmatrix(uniquewords,uniquewords,method = "jw")
+```
+
+Pasamos en un cluster de 20 grupos todas las palabras y generamos un dendograma con la funcion `hclust`
+
+```{r, fig.width= 10, fig.height=5, fig.align="center"}
+#Pasamos lista de unicas palabras
+rownames(distancewords) <- uniquewords
+#Graficamos por cluster
+hc <- hclust(as.dist(distancewords))
+plot(hc)
+rect.hclust(hc,k=20)
 ```
 
 &nbsp;
@@ -1196,7 +1332,6 @@ https://www.tidytextmining.com/tidytext.html
 
 https://tutorialzine.com/2014/12/learn-regular-expressions-in-20-minutes
 
-&nbsp;
 
 Herramienta para probar y depurar expresiones regulares.
 
@@ -1652,6 +1787,12 @@ Muchas gracias!!!
   + library(lubridate)
   + library(RColorBrewer)
   + library(tidyr)
+  + library(tm)
+  + library(qdap)
+  + library(wordcloud)
+  + library(stringdist)
+  
+15 librerías.
 
     
     
