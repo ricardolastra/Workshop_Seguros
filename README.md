@@ -15,7 +15,7 @@ Workshop de R, 8 sesiones para lectura, exploración, visualización, manejo de 
 *Aquí hemos publicado los mejores ejercicios [realizados por los participantes.](ejercicios/)
 
 ## Peticiones especiales
-*Manejo de strings, veremos algunos algoritmos de texto muy útiles con estos dos [libros.]{Texto/}
+*Manejo de strings, veremos algunos algoritmos de texto muy útiles con estos dos [libros.](Texto/)
 
 > Science is to understand your way...
 
