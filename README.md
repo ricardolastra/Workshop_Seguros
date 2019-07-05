@@ -1,6 +1,6 @@
 # Workshop_Seguros
 
-Workshop de R, 8 sesiones para lectura, exploración, manejo de datos y reportes en instituciones de seguros.
+Workshop de R, 8 sesiones para lectura, exploración, visualización, manejo de datos y reportes en instituciones de seguros.
 
 ## Notas
 *Las notas de cada sesión las pueden encontrar [aquí.](R_4_Insurance.Rmd)
@@ -12,10 +12,10 @@ Workshop de R, 8 sesiones para lectura, exploración, manejo de datos y reportes
 *Los archivos con información que ocuparemos están [aquí.](bases/)
 
 ## Ejercicios
-*Los ejercicios para el fin de semana son [estos.](ejercicios/)
+*Aquí hemos publicado los mejores ejercicios [realizados por los participantes.](ejercicios/)
 
 ## Peticiones especiales
-*Manejo de strings, veremos algunos algoritmos de texto muy útiles.
+*Manejo de strings, veremos algunos algoritmos de texto muy útiles con estos dos [libros.]{Texto/}
 
 > Science is to understand your way...
 
